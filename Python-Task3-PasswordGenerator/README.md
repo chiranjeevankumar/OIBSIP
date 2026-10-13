@@ -1,30 +1,23 @@
-# Password Generator
+# Random Password Generator
 
 ## Description
-A Python program that generates random passwords based on the user's
-chosen length and character types.
+A Python program that generates secure random passwords based on the user's preferred length and character types.
 
 ## Features
-- Choose password length.
-- Include uppercase letters.
-- Include lowercase letters.
-- Include numbers.
-- Include special characters.
-- Ensures each selected character type appears at least once.
-- Handles invalid input and short password lengths.
+- Minimum password length of 8 characters
+- Uppercase letters (A-Z)
+- Lowercase letters (a-z)
+- Numbers (0-9)
+- Special characters
+- Includes at least one character from each selected type
+- Uses Python's `secrets` module for secure random selection
+- Input validation
 
 ## Requirements
 - Python 3
-- No external libraries required.
 
 ## How to Run
-Run the following command in a terminal:
+Open a terminal in the project directory and run:
 
 ```bash
 python password_generator.py
-```
-
-## Technologies
-- Python
-- random
-- string

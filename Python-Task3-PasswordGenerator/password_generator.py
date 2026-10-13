@@ -1,56 +1,57 @@
-import random
+import secrets
 import string
 
+
 def generate_password():
-    print("=== Password Generator ===")
+    print("\n=== Password Generator ===")
 
-    try:
-        length = int(input("Enter password length: "))
+    while True:
+        try:
+            length = int(input("Enter password length (minimum 8): "))
 
-        if length < 1:
-            print("Password length must be at least 1.")
-            return
+            if length < 8:
+                print("Password length must be at least 8.")
+                continue
 
-        selected = []
+            break
 
-        if input("Include uppercase letters? (yes/no): ").lower() == "yes":
-            selected.append(string.ascii_uppercase)
+        except ValueError:
+            print("Please enter a valid whole number.")
 
-        if input("Include lowercase letters? (yes/no): ").lower() == "yes":
-            selected.append(string.ascii_lowercase)
+    selected = []
 
-        if input("Include numbers? (yes/no): ").lower() == "yes":
-            selected.append(string.digits)
+    if input("Include uppercase letters? (yes/no): ").strip().lower() == "yes":
+        selected.append(string.ascii_uppercase)
 
-        if input("Include special characters? (yes/no): ").lower() == "yes":
-            selected.append(string.punctuation)
+    if input("Include lowercase letters? (yes/no): ").strip().lower() == "yes":
+        selected.append(string.ascii_lowercase)
 
-        if not selected:
-            print("Please select at least one character type.")
-            return
+    if input("Include numbers? (yes/no): ").strip().lower() == "yes":
+        selected.append(string.digits)
 
-        if length < len(selected):
-            print("Password length is too short for all selected types.")
-            return
+    if input("Include special characters? (yes/no): ").strip().lower() == "yes":
+        selected.append(string.punctuation)
 
-        password_chars = [
-            random.choice(group) for group in selected
-        ]
+    if not selected:
+        print("Please select at least one character type.")
+        return
 
-        all_chars = "".join(selected)
+    all_chars = "".join(selected)
 
-        password_chars.extend(
-            random.choice(all_chars)
-            for _ in range(length - len(password_chars))
-        )
+    # Include at least one character from every selected type.
+    password_chars = [secrets.choice(group) for group in selected]
 
-        random.SystemRandom().shuffle(password_chars)
-        password = "".join(password_chars)
+    # Fill the remaining length.
+    password_chars.extend(
+        secrets.choice(all_chars)
+        for _ in range(length - len(password_chars))
+    )
 
-        print("Your generated password is:", password)
+    # Shuffle the characters securely.
+    secrets.SystemRandom().shuffle(password_chars)
 
-    except ValueError:
-        print("Please enter a valid whole number.")
+    password = "".join(password_chars)
+    print("\nYour generated password is:", password)
 
 
 if __name__ == "__main__":
